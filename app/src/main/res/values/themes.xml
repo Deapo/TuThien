@@ -1,0 +1,29 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.Tuibikho" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    </style>
+
+    <style name="MyCustomButtonShape">
+        <item name="cornerFamily">rounded</item> {/* hoặc "cut" */}
+        <item name="cornerSize">16dp</item> {/* Kích thước bo góc chung */}
+    </style>
+
+    <style name="MySpecificButtonShapeAppearance" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+        <item name="cornerFamily">cut</item>
+        <item name="cornerSize">12dp</item>
+    </style>
+
+    <style name="Arrow_Back">
+        .material-symbols-outlined {
+        font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 20
+        }
+    </style>
+
+    <style name="Theme.Tuibikho" parent="Base.Theme.Tuibikho" />
+</resources>
