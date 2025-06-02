@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "844815343784",
+    "project_id": "learn-8f041",
+    "storage_bucket": "learn-8f041.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:844815343784:android:c5c83f791671f4199d629d",
+        "android_client_info": {
+          "package_name": "com.example.tuibikho"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB47lDvyN9nnXQgr8twCVDJNUoM5jganFg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

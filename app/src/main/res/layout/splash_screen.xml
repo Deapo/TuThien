@@ -30,28 +30,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/linkLogin"
+    <Button
+        android:id="@+id/textlinkLogin"
         android:layout_width="150dp"
         android:layout_height="56dp"
         android:layout_marginTop="44dp"
         android:text="Đăng nhập"
         android:fontFamily="@font/pacifico_regular"
         android:textColor="@color/white"
-        app:cornerRadius="16dp"
         android:backgroundTint="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/titleApp"
-        app:layout_constraintWidth_percent="0.7" />
+        app:layout_constraintTop_toBottomOf="@id/titleApp" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/linkRegister"
+    <Button
+        android:id="@+id/textlinkRegister"
         android:layout_width="150dp"
         android:layout_height="56dp"
         android:layout_marginTop="24dp"
-        app:cornerRadius="16dp"
         android:text="Tạo tài khoản"
         android:fontFamily="@font/pacifico_regular"
         android:textColor="@color/black"
@@ -59,8 +56,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/linkLogin"
-        app:layout_constraintWidth_percent="0.7" />
+        app:layout_constraintTop_toBottomOf="@id/textlinkLogin" />
 
     <TextView
         android:id="@+id/socialText"

@@ -25,7 +25,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="244dp"
+        android:layout_marginTop="245dp"
         android:fontFamily="@font/pacifico_regular"
         android:text="Đăng ký"
         android:textSize="24sp"
@@ -37,10 +37,11 @@
 <!--    Nhap Email-->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputEmail"
-        android:layout_width="410dp"
-        android:layout_height="90dp"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:hint="Nhập email"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -49,8 +50,8 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextEmail"
-            android:layout_width="420dp"
-            android:layout_height="55dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:fontFamily="@font/poetsenone_regular"
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -58,10 +59,11 @@
 <!--    Nhap Password-->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputPassword"
-        android:layout_width="410dp"
-        android:layout_height="90dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:gravity="center"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:hint="Nhập mật khẩu"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -70,8 +72,8 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextPassword"
-            android:layout_width="420dp"
-            android:layout_height="55dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:fontFamily="@font/poetsenone_regular"
             android:inputType="textPassword"/>
 
@@ -81,9 +83,11 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputConfirmPassword"
         android:gravity="center"
-        android:layout_width="410dp"
-        android:layout_height="90dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:hint="Xác nhận mật khẩu"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -91,8 +95,8 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextConfirmPassword"
-            android:layout_width="420dp"
-            android:layout_height="55dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:fontFamily="@font/poetsenone_regular"
             android:inputType="textPassword"/>
 
