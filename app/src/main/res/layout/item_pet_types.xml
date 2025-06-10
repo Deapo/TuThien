@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="160dp"
+    android:layout_height="100dp"
+    android:orientation="horizontal"
+    android:background="@drawable/bg_item_types"
+    android:gravity="center_vertical"
+    android:layout_marginEnd="12dp"
+    android:padding="8dp">
+
+    <ImageView
+        android:id="@+id/imgPet"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/volunteer"
+        android:scaleType="centerCrop"/>
+    
+    <TextView
+        android:id="@+id/petName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dog"
+        android:textStyle="bold"
+        android:textSize="24sp"
+        android:fontFamily="@font/pacifico_regular"
+        android:layout_marginStart="8dp"/>
+</LinearLayout>

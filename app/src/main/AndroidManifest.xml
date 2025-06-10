@@ -22,16 +22,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity 
-            android:name=".SplashFragment"
-            android:exported="true">
-
-        </activity>
-        <activity android:name=".LoginFragment"
-            android:exported="true" />
-        <activity android:name=".RegisterFragment"
-            android:exported="true" />
-<!--        <activity android:name=".mailSend"></activity>-->
     </application>
 
 </manifest>

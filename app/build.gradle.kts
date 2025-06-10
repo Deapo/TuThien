@@ -58,12 +58,11 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
 
     implementation ("com.google.android.material:material:1.12.0")
-    implementation("androidx.recyclerview:recyclerview:1.3.2")
     implementation ("androidx.navigation:navigation-fragment:2.5.3")
     implementation ("androidx.navigation:navigation-ui:2.5.3")
     implementation ("com.github.bumptech.glide:glide:4.12.0")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
-
+    implementation("androidx.recyclerview:recyclerview:1.4.0")
 
 //    Google sign in SDK
     implementation("com.google.android.gms:play-services-auth:20.5.0")
@@ -85,6 +84,5 @@ dependencies {
 
 //    Card view
     implementation("androidx.cardview:cardview:1.0.0")
-    implementation("androidx.recyclerview:recyclerview:1.4.0")
-
+    
 }

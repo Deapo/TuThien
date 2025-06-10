@@ -5,4 +5,11 @@
     <color name="text_color">#FE7F42</color>
     <color name="b_dam">#DAA520</color>
     <color name="brownV1">#FFF8E7</color>
+    <color name="yellow">#F5DEB3</color>
+    <color name="orange_v2">#FDD234</color>
+    <color name="purple">#FBEDEC</color>
+    <color name="grey">#E5E4E2</color>
+    <color name="green">#F4FFFC</color>
+    <color name="tea_green">#F4FFFC</color>
+    <color name="green_t">#F0F8FF</color>
 </resources>
