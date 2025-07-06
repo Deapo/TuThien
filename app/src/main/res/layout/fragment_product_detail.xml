@@ -1,0 +1,231 @@
+<!-- app/src/main/res/layout/fragment_product_detail.xml -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Toolbar -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingBottom="8dp">
+
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_arrow_back"
+                android:contentDescription="Back" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Product Detail"
+                android:fontFamily="@font/edusahand_medium"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:gravity="center"/>
+
+            <ImageButton
+                android:id="@+id/btnFavorite"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_heart"
+                android:contentDescription="Favorite" />
+        </LinearLayout>
+
+        <!-- Product Image -->
+        <ImageView
+            android:id="@+id/imgProductDetail"
+            android:layout_width="220dp"
+            android:layout_height="180dp"
+            android:layout_gravity="center_horizontal"
+            android:scaleType="centerInside"
+            android:background="@drawable/img_cat_food_royal1"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Product Name & Price -->
+        <TextView
+            android:id="@+id/productNameDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Product Name"
+            android:fontFamily="@font/edusahand_medium"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"/>
+
+        <TextView
+            android:id="@+id/productPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1.99"
+            android:fontFamily="@font/pacifico_regular"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#222"
+            android:gravity="end"
+            android:layout_marginTop="4dp"/>
+
+        <!-- Product Weight -->
+        <TextView
+            android:id="@+id/productWeightDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="395g"
+            android:textSize="14sp"
+            android:textColor="#888"
+            android:layout_marginTop="2dp"/>
+
+        <!-- Rating -->
+
+        <!-- Quantity Selector -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+
+            <ImageButton
+                android:id="@+id/btnMinus"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_rect_white"
+                android:src="@drawable/ic_remove"
+                android:contentDescription="Minus" />
+
+            <TextView
+                android:id="@+id/txtQuantity"
+                android:layout_width="40dp"
+                android:layout_height="36dp"
+                android:gravity="center"
+                android:text="1"
+                android:fontFamily="@font/pacifico_regular"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+            <ImageButton
+                android:id="@+id/btnPlus"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_rect_white"
+                android:src="@drawable/ic_add"
+                android:contentDescription="Plus" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@android:color/white"
+            android:layout_marginBottom="8dp"
+            android:elevation="2dp"
+            android:padding="8dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Chi tiết sản phẩm"
+                android:fontFamily="@font/edusahand_bold"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp"/>
+                
+            <TextView
+                android:id="@+id/txtProductDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="No description available"
+                android:fontFamily="@font/edusahand_medium"
+                android:textSize="14sp"
+                android:textColor="#666"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@android:color/white"
+            android:layout_marginBottom="8dp"
+            android:elevation="2dp"
+            android:padding="8dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Lợi ích"
+                android:fontFamily="@font/edusahand_bold"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp"/>
+                
+            <TextView
+                android:id="@+id/txtProductBenefit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="No benefits information available"
+                android:fontFamily="@font/edusahand_medium"
+                android:textSize="14sp"
+                android:textColor="#666"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@android:color/white"
+            android:layout_marginBottom="8dp"
+            android:elevation="2dp"
+            android:padding="8dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Thông tin dinh dưỡng"
+                android:fontFamily="@font/edusahand_bold"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp"/>
+                
+            <TextView
+                android:id="@+id/txtProductNutrition"
+                android:layout_width="match_parent"
+                android:fontFamily="@font/edusahand_medium"
+                android:layout_height="wrap_content"
+                android:text="No nutritional information available"
+                android:textSize="14sp"
+                android:textColor="#666"/>
+        </LinearLayout>
+
+
+        <!-- Add to Cart Button -->
+        <Button
+            android:id="@+id/btnAddToCart"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:text="ADD TO CART"
+            android:textAllCaps="true"
+            android:fontFamily="@font/edusahand_bold"
+            android:textStyle="bold"
+            android:layout_gravity="bottom"
+            android:textColor="@android:color/black"
+            android:backgroundTint="@color/brownV1"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"/>
+    </LinearLayout>
+</ScrollView>

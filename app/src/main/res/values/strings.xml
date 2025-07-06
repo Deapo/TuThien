@@ -3,6 +3,31 @@
     <string name="home">Home</string>
     <string name="explore">Explore</string>
     <string name="favorite">Favorite</string>
-    <string name="account">Account</string>
-
+    <string name="profile">Hồ sơ</string>
+    <string name="imageProduct">imgProduct</string>
+    <string name="productName">ProductName</string>
+    <string name="productPrice">productPrice</string>
+    <string name="productAmount">Số lượng: </string>
+    <string name="addToCart">addToCart</string>
+    <string name="cart">Cart</string>
+    <string name="back">Back</string>
+    <string name="clearCart">Clear Cart</string>
+    <string name="total">Total</string>
+    <string name="checkout">Checkout</string>
+    <string name="emptyCart">Empty Cart</string>
+    <string name="emptyCartMessage">Your cart is empty. Add some products to get started!</string>
+    <string name="decrease">Decrease</string>
+    <string name="increase">Increase</string>
+    <string name="remove">Remove</string>
+    <string name="pay">Pay</string>
+    <string name="setting">Setting</string>
+    <string name="email">22h1120113@gmail.com</string>
+    <string name="txtAvatar">Chào người đẹp</string>
+    <string name="petName">Triet</string>
+    <string name="petAge">Tuổi: 2</string>
+    <string name="petGender">Giới tính: Nữ</string>
+    <string name="pet">BOSS</string>
+    <string name="balance">200.000 VND</string>
+    <string name="add_pet">Thêm thú cưng</string>
+    <string name="edit_username">Sửa tên người dùng</string>
 </resources>

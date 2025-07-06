@@ -1,7 +1,5 @@
 plugins {
     alias(libs.plugins.android.application)
-//    id("kotlin.android")
-
     id("com.google.gms.google-services")
 }
 
@@ -9,8 +7,10 @@ android {
     namespace = "com.example.tuibikho"
     compileSdk = 35
 
+
     buildFeatures {
         dataBinding = true
+        viewBinding = true
     }
 
     defaultConfig {
@@ -73,7 +73,7 @@ dependencies {
     implementation ("com.google.firebase:firebase-auth-ktx:23.2.1")
     implementation("com.google.firebase:firebase-storage-ktx")
     implementation("com.sun.mail:android-activation:1.6.7")
-    implementation("com.google.firebase:firebase-firestore-ktx:25.1.4")
+    implementation("com.google.firebase:firebase-firestore:25.1.4")
     implementation("com.sun.mail:android-mail:1.6.7") {
         exclude(group = "javax.activation", module = "activation")
     }
@@ -84,5 +84,23 @@ dependencies {
 
 //    Card view
     implementation("androidx.cardview:cardview:1.0.0")
-    
+
+    //Room
+    val roomVersion = "2.7.2"
+    implementation("androidx.room:room-runtime:$roomVersion")
+    annotationProcessor("androidx.room:room-compiler:$roomVersion")
+
+
+    //retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    //lifecycle\
+    val lifecycle_version = "2.9.1"
+    implementation("androidx.lifecycle:lifecycle-livedata:$lifecycle_version")
+    implementation("androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version")
+
+    //sqlite
+    implementation("androidx.sqlite:sqlite:2.5.1")
+    implementation("com.google.code.gson:gson:2.10.1")
 }

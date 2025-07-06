@@ -7,9 +7,16 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.Toast;
 import androidx.fragment.app.Fragment;
+
+import com.example.tuibikho.data.UserEntity;
+import com.example.tuibikho.repository.UserRepository;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 import javax.mail.MessagingException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -17,14 +24,16 @@ public class RegisterFragment extends Fragment {
     private TextInputEditText editTextEmail, editTextPassword, editTextConfirmPassword;
     private ImageButton back;
     private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
     private ExecutorService executorService;
+    private UserRepository userRepository;
 
     private final String sendEmail = "nguyenphiphung2004@gmail.com";
     private final String sendPassword = "mqlv epmg ksot dzjn"; // Thay thế bằng App Password 16 ký tự
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.register_screen, container, false);
+        View view = inflater.inflate(R.layout.fragment_register_screen, container, false);
 
         // Initialize executor service for background tasks
         executorService = Executors.newSingleThreadExecutor();
@@ -35,8 +44,12 @@ public class RegisterFragment extends Fragment {
         editTextConfirmPassword = view.findViewById(R.id.editTextConfirmPassword);
         back = view.findViewById(R.id.arrowBack);
 
-        // Initialize Firebase Auth
+        // Initialize Firebase Auth and Firestore
         mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+
+        // Initialize UserRepository
+        userRepository = new UserRepository();
 
         // Set up back button
         back.setOnClickListener(v -> {
@@ -77,52 +90,49 @@ public class RegisterFragment extends Fragment {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        // Send confirmation email in background
-                        executorService.execute(() -> {
-                            try {
-                                MailSend mailSender = new MailSend(sendEmail, sendPassword);
-                                mailSender.sendMail(
-                                    email,
-                                    "Đăng ký thành công",
-                                    "Chào mừng bạn đến với ứng dụng của chúng tôi!\n\n" +
-                                    "Tài khoản của bạn đã được tạo thành công.\n" +
-                                    "Email: " + email + "\n\n" +
-                                    "Cảm ơn bạn đã đăng ký!"
-                                );
-                                
-                                requireActivity().runOnUiThread(() -> {
-                                    Toast.makeText(getContext(), 
-                                        "Đăng ký thành công", Toast.LENGTH_SHORT).show();
-                                    
-                                    // Navigate to login screen
-                                    requireActivity().getSupportFragmentManager()
-                                        .beginTransaction()
-                                        .replace(R.id.fragment_container, new LoginFragment())
-                                        .addToBackStack(null)
-                                        .commit();
-                                });
-                            } catch (MessagingException e) {
-                                e.printStackTrace();
-                                requireActivity().runOnUiThread(() -> {
-                                    Toast.makeText(getContext(), 
-                                        "Đăng ký thành công nhưng không thể gửi email xác nhận", 
-                                        Toast.LENGTH_SHORT).show();
-                                    
-                                    // Navigate to login screen even if email fails
-                                    requireActivity().getSupportFragmentManager()
-                                        .beginTransaction()
-                                        .replace(R.id.fragment_container, new LoginFragment())
-                                        .addToBackStack(null)
-                                        .commit();
-                                });
-                            }
+                        String userId = mAuth.getCurrentUser().getUid();
+                        // Lưu user Firestore
+                        userRepository.saveUser(userId, email, "", email, () -> {
+                            // Tạo document giỏ hàng rỗng
+                            Map<String, Object> cart = new HashMap<>();
+                            cart.put("productID", new ArrayList<String>());
+                            cart.put("quantity", new ArrayList<Integer>());
+                            db.collection("cart_items").document(userId).set(cart);
+                            // Tạo document pet rỗng (map)
+                            db.collection("your_pet").document(userId).set(new HashMap<>());
+                            // Gửi email xác nhận như cũ
+                            executorService.execute(() -> {
+                                try {
+                                    MailSend mailSender = new MailSend(sendEmail, sendPassword);
+                                    mailSender.sendMail(
+                                        email,
+                                        "Đăng ký thành công",
+                                        "Chào mừng bạn đến với ứng dụng của chúng tôi!\n\n" +
+                                        "Tài khoản của bạn đã được tạo thành công.\n" +
+                                        "Email: " + email + "\n\n" +
+                                        "Cảm ơn bạn đã đăng ký!"
+                                    );
+                                    requireActivity().runOnUiThread(() -> {
+                                        Toast.makeText(getContext(),
+                                            "Đăng ký thành công", Toast.LENGTH_SHORT).show();
+                                        ((AuthActivity) requireActivity()).navigateToHome();
+                                    });
+                                } catch (MessagingException e) {
+                                    e.printStackTrace();
+                                    requireActivity().runOnUiThread(() -> {
+                                        Toast.makeText(getContext(),
+                                            "Đăng ký thành công nhưng không thể gửi email xác nhận",
+                                            Toast.LENGTH_SHORT).show();
+                                        ((AuthActivity) requireActivity()).showRegisterFragment();
+                                    });
+                                }
+                            });
+                        }, () -> {
+                            requireActivity().runOnUiThread(() -> {
+                                Toast.makeText(getContext(), "Lưu user thất bại", Toast.LENGTH_SHORT).show();
+                            });
                         });
-                    } else {
-                        String errorMessage = task.getException() != null ? 
-                            task.getException().getMessage() : "Đăng ký thất bại";
-                        Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
                     }
                 });
     }
-    //an internal has occur [CONFIGURATION_NOT_FOUND]
 }

@@ -3,16 +3,18 @@
     android:layout_width="160dp"
     android:layout_height="100dp"
     android:orientation="horizontal"
-    android:background="@drawable/bg_item_types"
+    android:background="@drawable/bg_rect_orange"
     android:gravity="center_vertical"
     android:layout_marginEnd="12dp"
-    android:padding="8dp">
+    android:padding="8dp"
+
+    android:id="@+id/itemPet">
 
     <ImageView
         android:id="@+id/imgPet"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:src="@drawable/volunteer"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@drawable/img_dog"
         android:scaleType="centerCrop"/>
     
     <TextView

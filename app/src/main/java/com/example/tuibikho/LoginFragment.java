@@ -15,11 +15,12 @@ public class LoginFragment extends Fragment {
     private TextInputEditText editTextEmail;
     private TextInputEditText editTextPassword;
     private MaterialButton btnLogin;
+
     private FirebaseAuth mAuth;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.login_screen, container, false);
+        View view = inflater.inflate(R.layout.fragment_login_screen, container, false);
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
@@ -50,11 +51,7 @@ public class LoginFragment extends Fragment {
                     if (task.isSuccessful()) {
                         Toast.makeText(getContext(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                         // Navigate to MainActivity
-                        requireActivity().getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.fragment_container, new SplashFragment())
-                            .addToBackStack(null)
-                            .commit();
+                        ((AuthActivity) requireActivity()).navigateToHome();
                     } else {
                         String errorMessage = task.getException() != null ? 
                             task.getException().getMessage() : "Đăng nhập thất bại";
@@ -67,7 +64,7 @@ public class LoginFragment extends Fragment {
         view.findViewById(R.id.linkRegister).setOnClickListener(v -> {
             requireActivity().getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_container, new RegisterFragment())
+                .replace(R.id.auth_container, new RegisterFragment())
                 .addToBackStack(null)
                 .commit();
         });

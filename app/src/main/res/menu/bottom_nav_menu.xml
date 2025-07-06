@@ -6,27 +6,32 @@
         android:id="@+id/home"
         android:enabled="true"
         android:icon="@drawable/ic_home"
+        android:background="@drawable/selector_bottom_nav"
         android:title="@string/home"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom"
+        android:checked="true"/>
 
     <item
         android:id="@+id/explore"
         android:enabled="true"
         android:icon="@drawable/ic_explore"
+        android:background="@drawable/selector_bottom_nav"
         android:title="@string/explore"
         app:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/favorite"
+        android:id="@+id/cart"
         android:enabled="true"
-        android:icon="@drawable/ic_heart"
-        android:title="@string/favorite"
+        android:icon="@drawable/ic_cart"
+        android:background="@drawable/selector_bottom_nav"
+        android:title="@string/cart"
         app:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/account"
+        android:id="@+id/profile"
         android:enabled="true"
         android:icon="@drawable/ic_account"
-        android:title="@string/account"
+        android:background="@drawable/selector_bottom_nav"
+        android:title="@string/profile"
         app:showAsAction="ifRoom"/>
 </menu>

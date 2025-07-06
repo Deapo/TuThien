@@ -2,82 +2,126 @@ package com.example.tuibikho;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
+import com.example.tuibikho.data.ProductEntity;
+import com.example.tuibikho.viewmodel.HomeViewModel;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import com.example.tuibikho.databinding.FragmentHomeScreenBinding;
 
 public class HomeFragment extends Fragment {
-    private FragmentManager fragmentManager;
+    private FragmentHomeScreenBinding binding;
+    private ProductAdapter productAdapter;
+    private PetTypeAdapter petTypeAdapter;
+    private HomeViewModel viewModel;
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.home_screen, container, false);
+        binding = FragmentHomeScreenBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
 
-        // Trending
-        RecyclerView trendingRecycler = view.findViewById(R.id.recyclerTrend);
-        List<TrendItem> trendingList = Arrays.asList(
-                new TrendItem(R.drawable.banner_trending, "Free puppy socialisation", "FREE"),
-                new TrendItem(R.drawable.banner_trending1, "Eco-friendly toys your dog will love", "Shop Green Elk"),
-                new TrendItem(R.drawable.banner_trending2, "Free Delicious Dog Food", "FREE")
-        );
-        TrendAdapter trendAdapter = new TrendAdapter(trendingList);
-        trendingRecycler.setAdapter(trendAdapter);
-        trendingRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
+        super.onViewCreated(view, savedInstanceState);
 
-        // Pet Types
-        RecyclerView petTypeRecycler = view.findViewById(R.id.recyclerPetType);
-        List<PetType> petTypeList = Arrays.asList(
-                new PetType(R.drawable.img_dog, "Dog"),
-                new PetType(R.drawable.img_cat, "Cat")
-                // Thêm các mục khác
-        );
-        PetTypeAdapter petTypeAdapter = new PetTypeAdapter(petTypeList);
-        petTypeRecycler.setAdapter(petTypeAdapter);
-        petTypeRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        viewModel = new ViewModelProvider(requireActivity()).get(HomeViewModel.class);
+        viewModel.FetchDataFromFirestore();
 
-        // Bottom Navigation
-        fragmentManager = getActivity().getSupportFragmentManager();
-        BottomNavigationView bottomNavigationView = view.findViewById(R.id.bottomNavigate);
+        observeViewModel();
+        setupRecyclerViews();
+        setupPetTypeClick();
 
-        bottomNavigationView.setOnItemSelectedListener(item -> {
-            Fragment selectedFragment = null;
-            int itemId = item.getItemId();
-            
-            if (itemId == R.id.home) {
-                selectedFragment = new HomeFragment();
-            } else if (itemId == R.id.explore) {
-                selectedFragment = new ExploreFragment();
-            } else if (itemId == R.id.favorite) {
-                selectedFragment = new FavoriteFragment();
-            } else if (itemId == R.id.account) {
-                selectedFragment = new AccountFragment();
-            }
+        binding.btnSeeAll.setOnClickListener(v -> navigateToAllProducts(null));
+        binding.btnSeeAllExplore.setOnClickListener(v -> navigateToAllProducts(null));
+    }
 
-            if (selectedFragment != null) {
-                fragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, selectedFragment)
+    private void setupRecyclerViews() {
+        // Product Adapter
+        productAdapter = new ProductAdapter();
+        binding.recyclerExplore.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
+        binding.recyclerExplore.setAdapter(productAdapter);
+        productAdapter.setOnItemClickListener(product -> {
+            // Mở ProductDetailFragment với thông tin sản phẩm đầy đủ
+            ProductDetailFragment detailFragment = ProductDetailFragment.newInstance(product);
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.home_container, detailFragment)
+                    .addToBackStack(null)
                     .commit();
-                return true;
-            }
-            return false;
         });
 
-        return view;
+        // PetType Adapter
+        binding.recyclerPetType.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
+        List<PetType> petTypeList = new ArrayList<>();
+        petTypeList.add(new PetType(R.drawable.img_dog, "Dog"));
+        petTypeList.add(new PetType(R.drawable.img_cat, "Cat"));
+        petTypeAdapter = new PetTypeAdapter(petTypeList);
+        binding.recyclerPetType.setAdapter(petTypeAdapter);
+    }
+
+    private void setupPetTypeClick() {
+        petTypeAdapter.setOnItemClickListener(petType -> navigateToAllProducts(petType.getName()));
+    }
+
+    private void navigateToAllProducts(String filter) {
+        AllProductsFragment allProductsFragment = new AllProductsFragment();
+        if (filter != null) {
+            Bundle bundle = new Bundle();
+            bundle.putString("PET_TYPE_FILTER", filter);
+            allProductsFragment.setArguments(bundle);
+        }
+        requireActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.home_container, allProductsFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    private void navigateToProfile(ProductEntity product) {
+        ProfileFragment profileFragment = new ProfileFragment();
+        requireActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.home_container, profileFragment)
+                .addToBackStack(null);
+
+    }
+
+    private void observeViewModel() {
+        viewModel.getProducts().observe(getViewLifecycleOwner(), products -> {
+            if(products != null && !products.isEmpty()) {
+                List<ProductEntity> randomProducts = new ArrayList<>(products);
+                Collections.shuffle(randomProducts); // tron ngau nhien danh sach san pham
+                if (randomProducts.size() > 5) {
+                    randomProducts = randomProducts.subList(0, 5); //lay 5 san pham dau tien
+                }
+                productAdapter.submitList(randomProducts); //gan danh sach san pham vao adapter (<-> diffutil)
+                binding.recyclerExplore.setVisibility(View.VISIBLE);
+                binding.emptyTrending.setVisibility(View.GONE); // an empty state
+            } else {
+                productAdapter.submitList(null);
+                binding.recyclerExplore.setVisibility(View.GONE);
+                // Hiện empty state
+                binding.emptyTrending.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }

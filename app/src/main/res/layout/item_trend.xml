@@ -1,32 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="160dp"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_marginEnd="12dp"
-    android:padding="8dp"
-    android:elevation="4dp">
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="150dp"
+    android:layout_height="250dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    app:cardCornerRadius="14dp"
+    app:cardBackgroundColor="@color/green"
+    app:cardElevation="4dp">
 
-    <ImageView
-        android:id="@+id/imgTrend"
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/child_care" />
-
-    <TextView
-        android:id="@+id/trendTitle"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Tiêu đề"
-        android:textSize="16sp"
-        android:layout_marginTop="8dp"
-        android:textStyle="bold"/>
-    
-    <TextView
-        android:id="@+id/trendDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Mô tả"
-        android:textSize="14sp"/>
-</LinearLayout>
+        android:orientation="vertical"
+        android:layout_marginEnd="4dp"
+        android:layout_marginStart="4dp"
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/imgProduct"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_cat_food_royal1"/>
+
+        <TextView
+            android:id="@+id/productName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tên"
+            android:fontFamily="@font/edusahand_bold"
+            android:textSize="16sp"
+            android:layout_marginTop="8dp"
+            android:textStyle="bold"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:minHeight="40dp"
+            android:textColor="@color/black"/>
+        
+        <TextView
+            android:id="@+id/productPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Giá"
+            android:gravity="bottom"
+            android:textStyle="bold"
+            android:textSize="16sp"/>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
