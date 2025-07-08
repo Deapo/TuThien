@@ -22,6 +22,7 @@ public class AllProductsFragment extends Fragment {
     private ProductAdapter productAdapter;
     private HomeViewModel viewModel;
     private String currentFilter = null;
+    private String currentSearchQuery = null;
     private List<ProductEntity> allProducts = new ArrayList<>();
 
     @Nullable
@@ -37,23 +38,64 @@ public class AllProductsFragment extends Fragment {
 
         if (getArguments() != null) {
             currentFilter = getArguments().getString("PET_TYPE_FILTER");
+            currentSearchQuery = getArguments().getString("SEARCH_QUERY");
         }
 
         viewModel = new ViewModelProvider(requireActivity()).get(HomeViewModel.class);
         setupRecyclerView();
+        setupSearchBar();
         observeViewModel();
         setupFilterChips();
         viewModel.FetchDataFromFirestore();
     }
 
+    private void setupSearchBar() {
+        // Setup search bar click listener
+        View searchHintView = getView().findViewById(R.id.tvSearchHint);
+        if (searchHintView != null) {
+            searchHintView.setOnClickListener(v -> {
+                showSearchDialog();
+            });
+        }
+    }
+
+    private void showSearchDialog() {
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(requireContext());
+        builder.setTitle("Tìm kiếm sản phẩm");
+        
+        android.widget.EditText input = new android.widget.EditText(requireContext());
+        input.setHint("Nhập tên sản phẩm...");
+        if (currentSearchQuery != null) {
+            input.setText(currentSearchQuery);
+        }
+        builder.setView(input);
+
+        // Set up the buttons
+        builder.setPositiveButton("Tìm kiếm", (dialog, which) -> {
+            String query = input.getText().toString().trim();
+            if (!query.isEmpty()) {
+                currentSearchQuery = query;
+                filterAndDisplayProducts();
+            }
+        });
+        builder.setNegativeButton("Hủy", (dialog, which) -> dialog.cancel());
+        builder.setNeutralButton("Xóa tìm kiếm", (dialog, which) -> {
+            currentSearchQuery = null;
+            filterAndDisplayProducts();
+        });
+
+        builder.show();
+    }
+
     private void setupRecyclerView() {
         productAdapter = new ProductAdapter();
-        binding.recyclerAllProducts.setLayoutManager(new GridLayoutManager(requireContext(), 2));
+        int spanCount = 2;
+        binding.recyclerAllProducts.setLayoutManager(new GridLayoutManager(requireContext(), spanCount));
         binding.recyclerAllProducts.setAdapter(productAdapter);
 
-        //chuyen doi dp sang px
         int spacingPixels = getResources().getDimensionPixelSize(R.dimen.grid_spacing);
-        binding.recyclerAllProducts.addItemDecoration(new GridSpacing(spacingPixels, 2, true));
+        binding.recyclerAllProducts.addItemDecoration(new GridSpacing(spacingPixels, spanCount, true));
+
         productAdapter.setOnItemClickListener(product -> {
             // Mở ProductDetailFragment với thông tin sản phẩm đầy đủ
             ProductDetailFragment detailFragment = ProductDetailFragment.newInstance(product);
@@ -90,15 +132,61 @@ public class AllProductsFragment extends Fragment {
     }
 
     private void filterAndDisplayProducts() {
-        if (currentFilter == null || currentFilter.equalsIgnoreCase("All")) {
-            productAdapter.submitList(allProducts);
-        } else {
-            List<ProductEntity> filteredList = allProducts.stream()
+        List<ProductEntity> filteredList = new ArrayList<>(allProducts);
+
+        // Apply pet type filter
+        if (currentFilter != null && !currentFilter.equalsIgnoreCase("All")) {
+            filteredList = filteredList.stream()
                     .filter(p -> p.getType() != null && currentFilter.equalsIgnoreCase(p.getType()))
                     .collect(Collectors.toList());
-            productAdapter.submitList(filteredList);
         }
+
+        // Apply search query filter
+        if (currentSearchQuery != null && !currentSearchQuery.trim().isEmpty()) {
+            String searchLower = currentSearchQuery.toLowerCase().trim();
+            filteredList = filteredList.stream()
+                    .filter(p -> {
+                        boolean nameMatch = p.getName() != null && 
+                                          p.getName().toLowerCase().contains(searchLower);
+                        boolean descriptionMatch = p.getDescription() != null && 
+                                                 p.getDescription().toLowerCase().contains(searchLower);
+                        boolean typeMatch = p.getType() != null && 
+                                          p.getType().toLowerCase().contains(searchLower);
+                        return nameMatch || descriptionMatch || typeMatch;
+                    })
+                    .collect(Collectors.toList());
+        }
+
+        productAdapter.submitList(filteredList);
         updateChipSelection();
+        updateSearchHint();
+        
+        // Show empty state if no results
+        if (filteredList.isEmpty()) {
+            showEmptyState();
+        } else {
+            hideEmptyState();
+        }
+    }
+
+    private void showEmptyState() {
+        // You can add an empty state view to your layout and show it here
+        Toast.makeText(requireContext(), "Không tìm thấy sản phẩm phù hợp", Toast.LENGTH_SHORT).show();
+    }
+
+    private void hideEmptyState() {
+        // Hide empty state view if you have one
+    }
+
+    private void updateSearchHint() {
+        View searchHintView = getView().findViewById(R.id.tvSearchHint);
+        if (searchHintView != null) {
+            if (currentSearchQuery != null && !currentSearchQuery.trim().isEmpty()) {
+                ((android.widget.TextView) searchHintView).setText("Tìm kiếm: " + currentSearchQuery);
+            } else {
+                ((android.widget.TextView) searchHintView).setText(getString(R.string.placeholder_search));
+            }
+        }
     }
 
     private void updateChipSelection() {

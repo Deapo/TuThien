@@ -8,7 +8,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Đổi tên người dùng"
+        android:text="@string/edit_username"
         android:textStyle="bold"
         android:textSize="18sp"
         android:layout_gravity="center_horizontal"/>
@@ -17,7 +17,7 @@
         android:id="@+id/edtNewUsername"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:hint="Tên mới"/>
+        android:hint="@string/new_username"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,11 +29,11 @@
             android:id="@+id/btnCancelEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hủy"/>
+            android:text="@string/action_cancel"/>
         <Button
             android:id="@+id/btnConfirmEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Xác nhận"/>
+            android:text="@string/action_confirm"/>
     </LinearLayout>
 </LinearLayout> 

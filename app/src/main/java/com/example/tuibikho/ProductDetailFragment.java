@@ -132,6 +132,7 @@ public class ProductDetailFragment extends Fragment {
         // Add to cart button
         binding.btnAddToCart.setOnClickListener(v -> {
             addToCart();
+            updateTotalPrice();
         });
     }
 
@@ -264,18 +265,22 @@ public class ProductDetailFragment extends Fragment {
 
     private void updateQuantityDisplay() {
         binding.txtQuantity.setText(String.valueOf(quantity));
+        updateTotalPrice();
+    }
+
+    private void updateTotalPrice() {
+        double total = currentProduct.getPrice() * quantity;
+        binding.productPrice.setText(formatPrice(total));
     }
 
 
     private void addToCart() {
         if (currentProduct != null) {
-            // bottom sheet
             String productId = currentProduct.getId();
             String name = currentProduct.getName();
             double price = currentProduct.getPrice();
             String imageUrl = currentProduct.getImageURL();
-            String amount = quantity + "";
-            addToCartBottomSheet bottomSheet = addToCartBottomSheet.newInstance(productId, name, price, imageUrl, amount);
+            addToCartBottomSheet bottomSheet = addToCartBottomSheet.newInstance(productId, name, price, imageUrl, quantity);
             bottomSheet.show(getChildFragmentManager(), "AddToCartBottomSheet");
         } else {
             String productName = binding.productNameDetail.getText().toString();

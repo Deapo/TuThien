@@ -1,5 +1,6 @@
 package com.example.tuibikho;
 
+import android.media.Image;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,21 +23,16 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login_screen, container, false);
 
-        // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
-        // Initialize views
         editTextEmail = view.findViewById(R.id.editTextEmail);
         editTextPassword = view.findViewById(R.id.editTextPassword);
-        btnLogin = view.findViewById(R.id.materialButton);
-        ImageButton back = view.findViewById(R.id.arrowBack);
+        btnLogin = view.findViewById(R.id.materialButtonLogin);
 
-        // Set up back button
-        back.setOnClickListener(v -> {
-            requireActivity().getSupportFragmentManager().popBackStack();
-        });
+        // Back button
+        view.findViewById(R.id.btnBack).setOnClickListener(v -> requireActivity().onBackPressed());
 
-        // Set up login button
+        // Login button
         btnLogin.setOnClickListener(v -> {
             String email = editTextEmail.getText().toString().trim();
             String password = editTextPassword.getText().toString().trim();
@@ -50,23 +46,18 @@ public class LoginFragment extends Fragment {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         Toast.makeText(getContext(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-                        // Navigate to MainActivity
                         ((AuthActivity) requireActivity()).navigateToHome();
                     } else {
-                        String errorMessage = task.getException() != null ? 
+                        String errorMessage = task.getException() != null ?
                             task.getException().getMessage() : "Đăng nhập thất bại";
-                        Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Lỗi: " + errorMessage, Toast.LENGTH_LONG).show();
                     }
                 });
         });
 
-        // Set up register link
+        // Register link
         view.findViewById(R.id.linkRegister).setOnClickListener(v -> {
-            requireActivity().getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.auth_container, new RegisterFragment())
-                .addToBackStack(null)
-                .commit();
+            ((AuthActivity) requireActivity()).showRegisterFragment(true);
         });
 
         return view;

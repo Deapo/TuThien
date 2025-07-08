@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
@@ -23,6 +24,7 @@ import java.util.concurrent.Executors;
 public class RegisterFragment extends Fragment {
     private TextInputEditText editTextEmail, editTextPassword, editTextConfirmPassword;
     private ImageButton back;
+    private TextView linkLogin;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
     private ExecutorService executorService;
@@ -42,7 +44,13 @@ public class RegisterFragment extends Fragment {
         editTextEmail = view.findViewById(R.id.editTextEmail);
         editTextPassword = view.findViewById(R.id.editTextPassword);
         editTextConfirmPassword = view.findViewById(R.id.editTextConfirmPassword);
-        back = view.findViewById(R.id.arrowBack);
+        back = view.findViewById(R.id.btnBack);
+        view.findViewById(R.id.registerButton).setOnClickListener(v -> registerUser());
+        linkLogin = view.findViewById(R.id.linkLogin);
+
+        linkLogin.setOnClickListener(v -> {
+            ((AuthActivity) requireActivity()).showLoginFragment(true);
+        });
 
         // Initialize Firebase Auth and Firestore
         mAuth = FirebaseAuth.getInstance();
@@ -53,11 +61,10 @@ public class RegisterFragment extends Fragment {
 
         // Set up back button
         back.setOnClickListener(v -> {
-            requireActivity().getSupportFragmentManager().popBackStack();
+            requireActivity().onBackPressed();
         });
 
         // Set up register button
-        view.findViewById(R.id.btnToNavigateLogin).setOnClickListener(v -> registerUser());
 
         return view;
     }
@@ -123,7 +130,7 @@ public class RegisterFragment extends Fragment {
                                         Toast.makeText(getContext(),
                                             "Đăng ký thành công nhưng không thể gửi email xác nhận",
                                             Toast.LENGTH_SHORT).show();
-                                        ((AuthActivity) requireActivity()).showRegisterFragment();
+                                        ((AuthActivity) requireActivity()).showRegisterFragment(true);
                                     });
                                 }
                             });

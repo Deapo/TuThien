@@ -92,7 +92,8 @@ public class CartAdapter extends ListAdapter<CartAdapter.CartDisplayItem, CartAd
 
         public void bind(CartDisplayItem cartItem) {
             productName.setText(cartItem.productName);
-            productPrice.setText(formatPrice(cartItem.productPrice));
+            double total = cartItem.productPrice * cartItem.quantity;
+            productPrice.setText(formatPrice(total));
             txtQuantity.setText(String.valueOf(cartItem.quantity));
             
             // Debug logging

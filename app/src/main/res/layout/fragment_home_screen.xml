@@ -10,6 +10,8 @@
         android:id="@+id/scrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:fillViewport="true"
+        android:clipToPadding="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -18,89 +20,220 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="16dp">
-
-<!--            Search bar-->
-            <include layout="@layout/include_search_bar"/>
-<!--            Banner-->
-            <include layout="@layout/include_banner"/>
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="8dp">
+                android:orientation="vertical"
+                android:background="@color/white"
+                android:paddingTop="16dp"
+                android:paddingBottom="20dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp">
 
+                <!-- Welcome Text -->
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Explore now"
+                    android:text="@string/thank_you"
+                    android:fitsSystemWindows="true"
                     android:textStyle="bold"
-                    android:textSize="20sp"/>
-                <Button
-                    android:id="@+id/btnSeeAllExplore"
+                    android:textSize="24sp"
+                    android:textColor="#1A1A1A"
+                    android:fontFamily="@font/edusahand_bold"
+                    android:layout_marginBottom="8dp"/>
+
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="See all"
-                    android:backgroundTint="@color/green"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"/>
+                    android:orientation="horizontal">
+
+                    <include
+                        layout="@layout/include_search_bar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="24dp"/>
+
+                    <ImageButton
+                        android:id="@+id/btnNotification"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:backgroundTint="@color/white"
+                        android:src="@drawable/ic_notification"
+                        android:layout_gravity="end"
+                        android:contentDescription="@string/action_noti"/>
+                </LinearLayout>
+
 
             </LinearLayout>
-            
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerExplore"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:overScrollMode="never"/>
-            <TextView
-                android:id="@+id/emptyTrending"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Không có sản phẩm trending"
-                android:gravity="center"
-                android:visibility="gone"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:layout_marginTop="8dp"/>
-            
+
+            <!-- Banner Section -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="8dp">
+                android:orientation="vertical"
+                android:background="#F8F9FA"
+                android:paddingTop="20dp"
+                android:paddingBottom="24dp">
 
-                <TextView
-                    android:layout_width="0dp"
+                <include 
+                    layout="@layout/include_banner"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Browse pet types"
-                    android:textSize="20sp"
-                    android:textStyle="bold"/>
-                <Button
-                    android:id="@+id/btnSeeAll"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="See all"
-                    android:backgroundTint="@color/green"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"/>
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"/>
 
             </LinearLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerPetType"
+            <!-- Trending Products Section -->
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:orientation="horizontal"
-                android:overScrollMode="never"/>
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/white"
+                android:paddingTop="24dp"
+                android:paddingBottom="24dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp">
+
+                <!-- Section Header -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="16dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/trending_products"
+                            android:textStyle="bold"
+                            android:textSize="20sp"
+                            android:textColor="#1A1A1A"
+                            android:fontFamily="@font/edusahand_bold"/>
+
+                    </LinearLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnSeeAllExplore"
+                        android:layout_width="100dp"
+                        android:layout_height="48dp"
+                        android:text="@string/action_see_all"
+                        android:textSize="12sp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/edusahand_medium"
+                        app:cornerRadius="18dp"
+                        android:backgroundTint="@color/green"
+                        android:stateListAnimator="@null"
+                        app:strokeWidth="0dp"/>
+
+                </LinearLayout>
+                
+                <!-- Trending Products RecyclerView -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerExplore"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:clipToPadding="false"
+                    android:padding="0dp"
+                    android:overScrollMode="never"/>
+
+                <!-- Empty State -->
+                <TextView
+                    android:id="@+id/emptyTrending"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/trending_products_empty"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:textColor="#666666"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/edusahand_medium"
+                    android:layout_marginTop="16dp"
+                    android:padding="20dp"/>
+
+            </LinearLayout>
+
+            <!-- Pet Types Section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="#F8F9FA"
+                android:paddingTop="24dp"
+                android:paddingBottom="24dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp">
+
+                <!-- Section Header -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="16dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/pet_type"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:textColor="#1A1A1A"
+                            android:fontFamily="@font/edusahand_bold"/>
+
+                    </LinearLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnSeeAll"
+                        android:layout_width="100dp"
+                        android:layout_height="48dp"
+                        android:text="@string/action_see_all"
+                        android:textSize="12sp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/edusahand_medium"
+                        app:cornerRadius="18dp"
+                        android:backgroundTint="@color/green"
+                        android:stateListAnimator="@null"
+                        app:strokeWidth="0dp"/>
+
+                </LinearLayout>
+
+                <!-- Pet Types RecyclerView -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerPetType"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:orientation="horizontal"
+                    android:clipToPadding="false"
+                    android:paddingStart="4dp"
+                    android:paddingEnd="4dp"
+                    android:overScrollMode="never"/>
+
+            </LinearLayout>
+
+            <!-- Bottom Spacing -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:background="@android:color/transparent"/>
+
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

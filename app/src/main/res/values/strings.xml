@@ -1,33 +1,137 @@
 <resources>
-    <string name="app_name">tuibikho</string>
-    <string name="home">Home</string>
-    <string name="explore">Explore</string>
-    <string name="favorite">Favorite</string>
-    <string name="profile">Hồ sơ</string>
-    <string name="imageProduct">imgProduct</string>
-    <string name="productName">ProductName</string>
-    <string name="productPrice">productPrice</string>
-    <string name="productAmount">Số lượng: </string>
-    <string name="addToCart">addToCart</string>
-    <string name="cart">Cart</string>
-    <string name="back">Back</string>
-    <string name="clearCart">Clear Cart</string>
-    <string name="total">Total</string>
-    <string name="checkout">Checkout</string>
-    <string name="emptyCart">Empty Cart</string>
-    <string name="emptyCartMessage">Your cart is empty. Add some products to get started!</string>
-    <string name="decrease">Decrease</string>
-    <string name="increase">Increase</string>
-    <string name="remove">Remove</string>
-    <string name="pay">Pay</string>
-    <string name="setting">Setting</string>
-    <string name="email">22h1120113@gmail.com</string>
-    <string name="txtAvatar">Chào người đẹp</string>
-    <string name="petName">Triet</string>
-    <string name="petAge">Tuổi: 2</string>
-    <string name="petGender">Giới tính: Nữ</string>
-    <string name="pet">BOSS</string>
-    <string name="balance">200.000 VND</string>
+    <string name="app_name">Tuibikho</string>
+    <string name="developer_info">Developed by Cafe_Sua</string>
+    <string name="app_version">Version 1.0.0</string>
+    <string name="app_description">LOVE PET</string>
+
+    <string name="nav_home">Trang chủ</string>
+    <string name="nav_explore">Khám phá</string>
+    <string name="nav_favorite">Yêu thích</string>
+    <string name="nav_profile">Hồ sơ</string>
+    <string name="nav_cart">Giỏ hàng</string>
+    <string name="action_back">Quay lại</string>
+
+    <string name="action_save">Lưu</string>
+    <string name="action_cancel">Hủy</string>
+    <string name="action_delete">Xóa</string>
+    <string name="action_edit">Chỉnh sửa</string>
+    <string name="action_add">Thêm</string>
+    <string name="action_update">Cập nhật</string>
+    <string name="action_confirm">Xác nhận</string>
+    <string name="action_close">Đóng</string>
+    <string name="action_retry">Thử lại</string>
+    <string name="action_share">Chia sẻ</string>
+    <string name="action_see_all">Xem tất cả</string>
+    <string name="action_search">Tìm kiếm</string>
+    <string name="action_filter">Lọc</string>
+    <string name="action_sort">Sắp xếp</string>
+    <string name="action_refresh">Làm mới</string>
+    <string name="action_pay">Thanh toán</string>
+    <string name="action_checkout">Thanh toán</string>
+    <string name="action_decrease">Giảm</string>
+    <string name="action_increase">Tăng</string>
+    <string name="action_noti">Notification</string>
+
+    <string name="login">Đăng nhập</string>
+    <string name="register">Đăng ký</string>
+    <string name="logout">Đăng xuất</string>
+    <string name="email">Email</string>
+    <string name="password">Mật khẩu</string>
+    <string name="confirm_password">Xác nhận mật khẩu</string>
+    <string name="forgot_password">Quên mật khẩu</string>
+    <string name="welcome_back">Chào mừng trở lại!</string>
+    <string name="login_to_continue">Đăng nhập để tiếp tục khám phá</string>
+    <string name="create_account">Tạo tài khoản mới</string>
+    <string name="join_community">Tham gia cộng đồng thú cưng của chúng tôi</string>
+    <string name="no_account">Chưa có tài khoản?</string>
+    <string name="register_now">Đăng ký ngay</string>
+    <string name="has_account">Đã có tài khoản?</string>
+    <string name="login_now">Đăng nhập ngay</string>
+    <string name="or_divider">hoặc</string>
+    <string name="thank_you">Chúc bạn một ngày rạng rỡ!</string>
+
+    <string name="products">Sản phẩm</string>
+    <string name="product_name">Tên sản phẩm</string>
+    <string name="product_price">Giá sản phẩm</string>
+    <string name="product_quantity">Số lượng</string>
+    <string name="product_description">Mô tả sản phẩm</string>
+    <string name="product_benefits">Lợi ích</string>
+    <string name="product_nutrition">Thông tin dinh dưỡng</string>
+    <string name="product_details">Chi tiết sản phẩm</string>
+    <string name="product_image_description">Hình ảnh sản phẩm</string>
+    <string name="trending_products">Sản phẩm nổi bật</string>
+    <string name="trending_products_empty">Không có sản phẩm nổi bật nào"</string>
+    <string name="explore_products">Khám phá sản phẩm</string>
+    <string name="best_sellers">Bán chạy</string>
+    <string name="new_arrivals">Hàng mới</string>
+    <string name="on_sale">Đang giảm giá</string>
+    <string name="stock_available">Còn hàng</string>
+    <string name="stock_out_of">Hết hàng</string>
+    <string name="stock_limited">Còn ít</string>
+    <string name="stock_coming_soon">Sắp có</string>
+
+    <string name="add_to_cart">Thêm vào giỏ hàng</string>
+    <string name="clear_cart">Xóa giỏ hàng</string>
+    <string name="total">Tổng cộng</string>
+    <string name="cart_empty">Giỏ hàng trống</string>
+    <string name="cart_empty_message">Giỏ hàng của bạn đang trống. Hãy thêm một số sản phẩm để bắt đầu!</string>
+    <string name="remove_from_cart">Xóa</string>
+
+    <string name="profile_info">Thông tin cá nhân</string>
+    <string name="balance">Số dư</string>
+    <string name="current_balance">Số dư hiện tại</string>
+    <string name="edit_username">Chỉnh sửa tên người dùng</string>
+    <string name="new_username">Tên người dùng mới</string>
+    <string name="avatar_link_optional">Link ảnh đại diện (tùy chọn)</string>
+
+    <string name="pet">Thú cưng</string>
+    <string name="pet_name">Tên thú cưng</string>
+    <string name="pet_age">Tuổi</string>
+    <string name="pet_gender">Giới tính</string>
+    <string name="pet_info">Thông tin thú cưng</string>
+    <string name="pet_type">Loại thú cưng</string>
+    <string name="pet_breed">Giống</string>
+    <string name="pet_weight">Cân nặng</string>
+    <string name="pet_color">Màu sắc</string>
     <string name="add_pet">Thêm thú cưng</string>
-    <string name="edit_username">Sửa tên người dùng</string>
+    <string name="gender_male">Nam</string>
+    <string name="gender_female">Nữ</string>
+
+    <string name="category_all">Tất cả</string>
+    <string name="category_dog">Chó</string>
+    <string name="category_cat">Mèo</string>
+    <string name="categories">Danh mục</string>
+
+    <string name="loading">Đang tải</string>
+    <string name="success">Thành công</string>
+    <string name="info">Thông tin</string>
+    <string name="success_add_to_cart">Đã thêm vào giỏ hàng</string>
+    <string name="confirm_delete">Bạn có chắc chắn muốn xóa?</string>
+    <string name="confirm_clear_cart">Bạn có chắc chắn muốn xóa toàn bộ giỏ hàng?</string>
+    <string name="confirm_logout">Bạn có chắc chắn muốn đăng xuất?</string>
+
+    <string name="placeholder_search">Tìm kiếm sản phẩm</string>
+    <string name="placeholder_email">Nhập email của bạn</string>
+    <string name="placeholder_password">Nhập mật khẩu của bạn</string>
+
+    <string name="product_count">%d sản phẩm</string>
+    <string name="price_format">%s ₫</string>
+    <plurals name="age_in_years">
+        <item quantity="one">%d tuổi</item>
+        <item quantity="other">%d tuổi</item>
+    </plurals>
+
+    <string name="name">Tên</string>
+    <string name="price">Giá</string>
+    <string name="product_amount">Khối lượng</string>
+    <string name="default_quantity">1</string>
+    <string name="dog">Chó</string>
+    <string name="no_description">Không có thông tin mô tả</string>
+    <string name="benefits">Lợi ích</string>
+    <string name="no_benefits">Không có thông tin lợi ích</string>
+    <string name="nutrition_info">Thông tin dinh dưỡng</string>
+    <string name="no_nutrition_info">Không có thông tin dinh dưỡng</string>
+    <string name="favorites">Yêu thích</string>
+    <string name="image_product">Hình ảnh sản phẩm</string>
+    <string name="remove">Xóa</string>
 </resources>

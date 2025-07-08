@@ -4,6 +4,9 @@ package com.example.tuibikho.data;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity(tableName = "your_pet")
 public class PetEntity {
     @PrimaryKey
@@ -13,7 +16,6 @@ public class PetEntity {
     private String petAge;
     private String petGender;
 
-    // Constructors, getters, and setters
     public int getPetId() {
         return petId;
     }

@@ -15,7 +15,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.tuibikho"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -103,4 +103,7 @@ dependencies {
     //sqlite
     implementation("androidx.sqlite:sqlite:2.5.1")
     implementation("com.google.code.gson:gson:2.10.1")
+
+    implementation ("com.squareup.okhttp3:okhttp:4.9.3")
+    implementation ("androidx.browser:browser:1.4.0")
 }

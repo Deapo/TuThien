@@ -15,7 +15,6 @@ import com.example.tuibikho.data.ProductEntity;
 import java.text.NumberFormat;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.List;
 
 public class ProductAdapter extends ListAdapter<ProductEntity, ProductAdapter.ProductViewHolder> {
     private OnItemClickListener listener;
@@ -52,7 +51,7 @@ public class ProductAdapter extends ListAdapter<ProductEntity, ProductAdapter.Pr
     @Override
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_trend, parent, false);
+                .inflate(R.layout.item_product, parent, false);
         return new ProductViewHolder(view);
     }
 

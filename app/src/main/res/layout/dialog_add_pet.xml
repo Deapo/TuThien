@@ -8,7 +8,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Thêm thú cưng mới"
+        android:text="@string/add_pet"
         android:textStyle="bold"
         android:textSize="18sp"
         android:layout_gravity="center_horizontal"/>
@@ -17,13 +17,13 @@
         android:id="@+id/edtPetName"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:hint="Tên thú cưng"/>
+        android:hint="@string/pet_name"/>
 
     <EditText
         android:id="@+id/edtPetAge"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:hint="Tuổi"/>
+        android:hint="@string/pet_age"/>
 
     <RadioGroup
         android:id="@+id/radioGroupGender"
@@ -35,19 +35,37 @@
             android:id="@+id/radioMale"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Đực"/>
+            android:text="@string/gender_male"/>
         <RadioButton
             android:id="@+id/radioFemale"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cái"/>
+            android:text="@string/gender_female"/>
     </RadioGroup>
 
     <EditText
         android:id="@+id/edtPetAvatar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:hint="Link ảnh đại diện (tùy chọn)"/>
+        android:hint="@string/avatar_link_optional"/>
+
+    <EditText
+        android:id="@+id/edtPetBirthday"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Ngày sinh (yyyy-MM-dd)" />
+
+    <EditText
+        android:id="@+id/edtPetHealthStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Tình trạng sức khỏe" />
+
+    <EditText
+        android:id="@+id/edtPetVaccination"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Lịch tiêm phòng, tẩy giun" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -59,11 +77,11 @@
             android:id="@+id/btnCancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hủy"/>
+            android:text="@string/action_cancel"/>
         <Button
             android:id="@+id/btnAddPet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Thêm"/>
+            android:text="@string/action_add"/>
     </LinearLayout>
 </LinearLayout> 

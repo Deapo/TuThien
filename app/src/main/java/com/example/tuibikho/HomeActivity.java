@@ -17,7 +17,6 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         if (BuildConfig.DEBUG) {
-            // Initialize database with migration support
             Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "app_database")
                     .fallbackToDestructiveMigration()
                     .build()
@@ -39,19 +38,18 @@ public class HomeActivity extends AppCompatActivity {
             } else if (itemId == R.id.profile){
                 selectedFragment = new ProfileFragment();
             }
-            // Add other cases for favourite, account when they are ready
 
             if (selectedFragment != null) {
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.home_container, selectedFragment)
+                        .addToBackStack(null)
                         .commit();
                 return true;
             }
             return false;
         });
 
-        // Load default fragment
         if (savedInstanceState == null) {
             bottomNavigationView.setSelectedItemId(R.id.home);
         }

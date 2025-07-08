@@ -21,6 +21,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import org.json.JSONException;
+import org.json.JSONObject;
+import java.io.IOException;
+import androidx.browser.customtabs.CustomTabsIntent;
+import android.net.Uri;
+import android.content.Intent;
+import android.app.AlertDialog;
 
 public class CartFragment extends Fragment {
     private FragmentCartBinding binding;
@@ -28,6 +42,7 @@ public class CartFragment extends Fragment {
     private CartAdapter cartAdapter;
     private String userId;
     private FirebaseFirestore db;
+    private double totalAmount = 0;
 
     @Nullable
     @Override
@@ -78,10 +93,10 @@ public class CartFragment extends Fragment {
             Toast.makeText(requireContext(), "Cart cleared", Toast.LENGTH_SHORT).show();
         });
 
-        // Checkout button
+        // Checkout button (chỉ hiển thị tổng tiền, không gọi API)
         binding.btnCheckout.setOnClickListener(v -> {
-            // TODO: Implement checkout functionality
-            Toast.makeText(requireContext(), "Checkout functionality coming soon!", Toast.LENGTH_SHORT).show();
+            double total = getCurrentTotal();
+            showDialog("Tổng tiền: " + formatPrice(total));
         });
     }
 
@@ -92,9 +107,9 @@ public class CartFragment extends Fragment {
                 updateEmptyState(new ArrayList<>());
                 binding.totalPrice.setText("0 VND");
                 binding.btnCheckout.setEnabled(false);
+                totalAmount = 0;
                 return;
             }
-            // Lấy thông tin sản phẩm từ Firestore
             ArrayList<CartAdapter.CartDisplayItem> displayItems = new ArrayList<>();
             final double[] total = {0};
             final int[] loaded = {0};
@@ -106,13 +121,6 @@ public class CartFragment extends Fragment {
                         String name = doc.getString("name");
                         String imageURL = doc.getString("imageURL");
                         Double price = doc.getDouble("price");
-                        
-                        // Debug logging
-                        android.util.Log.d("CartFragment", "Product ID: " + productId);
-                        android.util.Log.d("CartFragment", "Name: " + name);
-                        android.util.Log.d("CartFragment", "ImageURL: " + imageURL);
-                        android.util.Log.d("CartFragment", "Price: " + price);
-                        
                         CartAdapter.CartDisplayItem item = new CartAdapter.CartDisplayItem(
                                 productId,
                                 name != null ? name : "",
@@ -122,8 +130,6 @@ public class CartFragment extends Fragment {
                         );
                         displayItems.add(item);
                         total[0] += (price != null ? price : 0) * quantity;
-                    } else {
-                        android.util.Log.w("CartFragment", "Document does not exist for product ID: " + productId);
                     }
                     loaded[0]++;
                     if (loaded[0] == cartMap.size()) {
@@ -131,15 +137,16 @@ public class CartFragment extends Fragment {
                         updateEmptyState(displayItems);
                         binding.totalPrice.setText(formatPrice(total[0]));
                         binding.btnCheckout.setEnabled(!displayItems.isEmpty());
+                        totalAmount = total[0];
                     }
                 }).addOnFailureListener(e -> {
-                    android.util.Log.e("CartFragment", "Error loading product: " + productId, e);
                     loaded[0]++;
                     if (loaded[0] == cartMap.size()) {
                         cartAdapter.submitList(displayItems);
                         updateEmptyState(displayItems);
                         binding.totalPrice.setText(formatPrice(total[0]));
                         binding.btnCheckout.setEnabled(!displayItems.isEmpty());
+                        totalAmount = total[0];
                     }
                 });
             }
@@ -163,9 +170,25 @@ public class CartFragment extends Fragment {
         return formatter.format(price);
     }
 
+    private double getCurrentTotal() {
+        double total = 0;
+        List<CartAdapter.CartDisplayItem> items = cartAdapter.getCurrentList();
+        for (CartAdapter.CartDisplayItem item : items) {
+            total += item.productPrice * item.quantity;
+        }
+        return total;
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    private void showDialog(String message) {
+        new AlertDialog.Builder(getContext())
+            .setMessage(message)
+            .setPositiveButton("OK", null)
+            .show();
     }
 } 

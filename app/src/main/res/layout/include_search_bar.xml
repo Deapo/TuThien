@@ -1,51 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="4dp"
+    android:orientation="horizontal">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <ImageView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:src="@drawable/alien"/>
 
-        <ImageView
-            android:id="@+id/logoCat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:layout_marginStart="8dp"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/alien" />
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="2dp"
+        app:strokeWidth="0dp">
 
-        <com.google.android.material.search.SearchBar
-            android:id="@+id/search_bar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/green"
-            android:layout_weight="1"
-            android:hint="Search"
-            app:navigationIcon="@drawable/ic_search"/>
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_search_bar"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
 
-        <ImageButton
-            android:id="@+id/linkCart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/cart"
-            android:layout_gravity="center_vertical"
-            android:backgroundTint="@color/white"/>
-    </LinearLayout>
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="12dp"
+                android:src="@drawable/ic_search" />
 
-    <com.google.android.material.search.SearchView
-        android:id="@+id/search_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:hint="Search"
-        app:layout_anchor="@id/search_bar">
+            <TextView
+                android:id="@+id/tvSearchHint"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:clickable="true"
+                android:focusable="true"
+                android:fontFamily="@font/edusahand_medium"
+                android:gravity="center_vertical"
+                android:text="@string/placeholder_search"
+                android:textColor="#666666"
+                android:textSize="14sp" />
 
-    </com.google.android.material.search.SearchView>
+        </LinearLayout>
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+<!--    <ImageButton-->
+<!--        android:id="@+id/btnNotification"-->
+<!--        android:layout_width="48dp"-->
+<!--        android:layout_height="48dp"-->
+<!--        android:backgroundTint="@color/white"-->
+<!--        android:src="@drawable/ic_notification"-->
+<!--        android:layout_gravity="end"-->
+<!--        android:contentDescription="@string/action_noti"/>-->
+
+
+</LinearLayout>

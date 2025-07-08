@@ -7,7 +7,7 @@
         android:enabled="true"
         android:icon="@drawable/ic_home"
         android:background="@drawable/selector_bottom_nav"
-        android:title="@string/home"
+        android:title="@string/nav_home"
         app:showAsAction="ifRoom"
         android:checked="true"/>
 
@@ -16,7 +16,7 @@
         android:enabled="true"
         android:icon="@drawable/ic_explore"
         android:background="@drawable/selector_bottom_nav"
-        android:title="@string/explore"
+        android:title="@string/nav_explore"
         app:showAsAction="ifRoom"/>
 
     <item
@@ -24,7 +24,7 @@
         android:enabled="true"
         android:icon="@drawable/ic_cart"
         android:background="@drawable/selector_bottom_nav"
-        android:title="@string/cart"
+        android:title="@string/nav_cart"
         app:showAsAction="ifRoom"/>
 
     <item
@@ -32,6 +32,6 @@
         android:enabled="true"
         android:icon="@drawable/ic_account"
         android:background="@drawable/selector_bottom_nav"
-        android:title="@string/profile"
+        android:title="@string/nav_profile"
         app:showAsAction="ifRoom"/>
 </menu>

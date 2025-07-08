@@ -10,21 +10,24 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import com.example.tuibikho.viewmodel.PetViewModel;
 
 import com.example.tuibikho.data.ProductEntity;
 import com.example.tuibikho.viewmodel.HomeViewModel;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import com.example.tuibikho.databinding.FragmentHomeScreenBinding;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class HomeFragment extends Fragment {
     private FragmentHomeScreenBinding binding;
     private ProductAdapter productAdapter;
     private PetTypeAdapter petTypeAdapter;
     private HomeViewModel viewModel;
-
 
     @Nullable
     @Override
@@ -43,18 +46,53 @@ public class HomeFragment extends Fragment {
         observeViewModel();
         setupRecyclerViews();
         setupPetTypeClick();
+        setupSearchBar();
 
-        binding.btnSeeAll.setOnClickListener(v -> navigateToAllProducts(null));
-        binding.btnSeeAllExplore.setOnClickListener(v -> navigateToAllProducts(null));
+        binding.btnSeeAll.setOnClickListener(v -> navigateToAllProducts(null, null));
+        binding.btnSeeAllExplore.setOnClickListener(v -> navigateToAllProducts(null, null));
+
+    }
+
+    private void setupSearchBar() {
+        // Setup search bar click listener - sử dụng View.findViewById thay vì binding
+        View searchHintView = getView().findViewById(R.id.tvSearchHint);
+        if (searchHintView != null) {
+            searchHintView.setOnClickListener(v -> {
+                showSearchDialog();
+            });
+        }
+    }
+
+    private void showSearchDialog() {
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(requireContext());
+        builder.setTitle("Tìm kiếm sản phẩm");
+
+        android.widget.EditText input = new android.widget.EditText(requireContext());
+        input.setHint("Nhập tên sản phẩm...");
+        builder.setView(input);
+
+        // Set up the buttons
+        builder.setPositiveButton("Tìm kiếm", (dialog, which) -> {
+            String query = input.getText().toString().trim();
+            if (!query.isEmpty()) {
+                navigateToAllProducts(null, query);
+            }
+        });
+        builder.setNegativeButton("Hủy", (dialog, which) -> dialog.cancel());
+        builder.setNeutralButton("Xóa tìm kiếm", (dialog, which) -> {});
+
+        builder.show();
     }
 
     private void setupRecyclerViews() {
-        // Product Adapter
         productAdapter = new ProductAdapter();
         binding.recyclerExplore.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
         binding.recyclerExplore.setAdapter(productAdapter);
+
+        int spacingPixels = getResources().getDimensionPixelSize(R.dimen.grid_spacing);
+        binding.recyclerExplore.addItemDecoration(new HorizontalSpaceItemDecoration(spacingPixels));
+
         productAdapter.setOnItemClickListener(product -> {
-            // Mở ProductDetailFragment với thông tin sản phẩm đầy đủ
             ProductDetailFragment detailFragment = ProductDetailFragment.newInstance(product);
             requireActivity().getSupportFragmentManager()
                     .beginTransaction()
@@ -63,7 +101,7 @@ public class HomeFragment extends Fragment {
                     .commit();
         });
 
-        // PetType Adapter
+        // PetType Adapter giữ nguyên
         binding.recyclerPetType.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
         List<PetType> petTypeList = new ArrayList<>();
         petTypeList.add(new PetType(R.drawable.img_dog, "Dog"));
@@ -73,14 +111,19 @@ public class HomeFragment extends Fragment {
     }
 
     private void setupPetTypeClick() {
-        petTypeAdapter.setOnItemClickListener(petType -> navigateToAllProducts(petType.getName()));
+        petTypeAdapter.setOnItemClickListener(petType -> navigateToAllProducts(petType.getName(), null));
     }
 
-    private void navigateToAllProducts(String filter) {
+    private void navigateToAllProducts(String filter, String searchQuery) {
         AllProductsFragment allProductsFragment = new AllProductsFragment();
+        Bundle bundle = new Bundle();
         if (filter != null) {
-            Bundle bundle = new Bundle();
             bundle.putString("PET_TYPE_FILTER", filter);
+        }
+        if (searchQuery != null) {
+            bundle.putString("SEARCH_QUERY", searchQuery);
+        }
+        if (filter != null || searchQuery != null) {
             allProductsFragment.setArguments(bundle);
         }
         requireActivity().getSupportFragmentManager()

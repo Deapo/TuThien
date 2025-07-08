@@ -34,4 +34,5 @@ public class CartViewModel extends AndroidViewModel {
     public void clearCart(String userId, Runnable onSuccess, Runnable onFailure) {
         repository.clearCart(userId, onSuccess, onFailure);
     }
+
 } 

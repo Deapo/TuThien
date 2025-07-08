@@ -7,10 +7,10 @@ import androidx.lifecycle.LiveData;
 import com.example.tuibikho.repository.PetRepository;
 import java.util.Map;
 
-public class PetViewHolder extends AndroidViewModel {
+public class PetViewModel extends AndroidViewModel {
     private final PetRepository petRepository;
 
-    public PetViewHolder(@NonNull Application application) {
+    public PetViewModel(@NonNull Application application) {
         super(application);
         petRepository = new PetRepository();
     }

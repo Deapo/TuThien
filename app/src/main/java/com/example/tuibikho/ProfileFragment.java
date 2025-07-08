@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,7 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.tuibikho.databinding.FragmentProfileBinding;
 import com.example.tuibikho.data.PetEntity;
-import com.example.tuibikho.viewmodel.PetViewHolder;
+import com.example.tuibikho.viewmodel.PetViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -23,12 +24,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.UUID;
 
 public class ProfileFragment extends Fragment {
     private static final String TAG = "FragmentProfile";
     private FragmentProfileBinding binding;
-    private PetViewHolder petViewModel;
+    private PetViewModel petViewModel;
     private YourPetAdapter petAdapter;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
@@ -47,7 +47,7 @@ public class ProfileFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         userId = mAuth.getCurrentUser().getUid();
-        petViewModel = new ViewModelProvider(this).get(PetViewHolder.class);
+        petViewModel = new ViewModelProvider(this).get(PetViewModel.class);
         petAdapter = new YourPetAdapter();
         binding.recyclerInfoPet.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.recyclerInfoPet.setAdapter(petAdapter);
@@ -67,10 +67,10 @@ public class ProfileFragment extends Fragment {
             });
         }
 
-        // Xử lý click nút sửa username
+        // nút sửa username
         binding.itemAvatarUser.editAvaName.setOnClickListener(v -> showEditUsernameDialog());
 
-        // Quan sát danh sách thú cưng Firestore
+        // Danh sách thú cưng
         petViewModel.getAllPets(userId).observe(getViewLifecycleOwner(), petsMap -> {
             ArrayList<PetEntity> pets = new ArrayList<>();
             if (petsMap != null) {
@@ -91,9 +91,9 @@ public class ProfileFragment extends Fragment {
             petAdapter.submitList(pets);
         });
 
-        // Xử lý nút thêm thú cưng
+        //nút thêm thú cưng
         binding.addPet.setOnClickListener(v -> {
-            // Giới hạn tối đa 5 pet
+            //tối đa 5 pet
             petViewModel.getAllPets(userId).observe(getViewLifecycleOwner(), petsMap -> {
                 if (petsMap == null || petsMap.size() < 5) {
                     showAddPetDialog();
@@ -105,6 +105,17 @@ public class ProfileFragment extends Fragment {
 
         // Xử lý nút back
         binding.btnBack.setOnClickListener(v -> requireActivity().onBackPressed());
+
+        ImageButton btnLogout = view.findViewById(R.id.btnLogout);
+        btnLogout.setOnClickListener(v -> {
+            // Đăng xuất Firebase
+            FirebaseAuth.getInstance().signOut();
+
+            // Chuyển về màn hình đăng nhập
+            Intent intent = new Intent(requireContext(), SplashActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+        });
     }
 
     private void showAddPetDialog() {

@@ -3,116 +3,202 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:background="@color/white">
 
-    <TextView
-        android:id="@+id/tvExploreCategories"
-        android:layout_width="wrap_content"
+    <!-- Header Section -->
+    <LinearLayout
+        android:id="@+id/headerSection"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Explore Categories"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:fontFamily="@font/edusahand_medium"
-        android:layout_marginTop="24dp"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:elevation="2dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="20dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardSearch"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="16dp"
-        app:cardCornerRadius="24dp"
-        app:layout_constraintTop_toBottomOf="@id/tvExploreCategories"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp">
-
-        <EditText
-            android:id="@+id/etSearch"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="Search Product or Brand"
-            android:background="@android:color/transparent"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:textSize="16sp"/>
-    </androidx.cardview.widget.CardView>
-
-    <HorizontalScrollView
-        android:id="@+id/scrollCategories"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:fillViewport="true"
-        android:scrollbars="none"
-        app:layout_constraintTop_toBottomOf="@id/cardSearch"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
-            android:id="@+id/layoutCategories"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp">
-            <!-- Các chip filter sẽ được add động hoặc hardcode ví dụ: -->
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipAll"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_arrow_back"
+                android:layout_gravity="start"
+                android:backgroundTint="@color/white"
+                android:contentDescription="@string/action_back"/>
+
+            <TextView
+                android:id="@+id/tvExploreCategories"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="All"
-                app:chipCornerRadius="8dp"
-                app:chipStartPadding="8dp"
-                app:chipEndPadding="8dp"
-                app:chipBackgroundColor="@drawable/selector_bottom_nav"
-                android:textColor="@color/black"
+                android:layout_marginStart="28dp"
+                android:layout_marginBottom="20dp"
                 android:fontFamily="@font/edusahand_bold"
-                android:checked="true"/>
+                android:layout_gravity="center_horizontal"
+                android:text="@string/explore_products"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipDog"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:chipIcon="@drawable/chip_dog_1"
-                app:chipIconVisible="true"
-                app:chipIconSize="20dp"
-                app:chipCornerRadius="8dp"
-                app:chipStartPadding="14dp"
-                app:chipEndPadding="1dp"
-                android:layout_marginEnd="4dp"
-                android:layout_marginStart="4dp"
-                app:chipBackgroundColor="@drawable/selector_bottom_nav"
-                />
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipCat"
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:chipIcon="@drawable/ic_chip_cat"
-                app:chipIconVisible="true"
-                app:chipIconSize="20dp"
-                app:chipCornerRadius="8dp"
-                app:chipStartPadding="14dp"
-                app:chipEndPadding="1dp"
-                app:chipBackgroundColor="@drawable/selector_bottom_nav" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
         </LinearLayout>
-    </HorizontalScrollView>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerAllProducts"
-        android:layout_width="match_parent"
+        <!-- Search Bar -->
+        <include 
+            layout="@layout/include_search_bar_categories"
+            android:id="@+id/search_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Categories Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/categories"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="#666666"
+                android:fontFamily="@font/edusahand_medium"
+                android:layout_marginBottom="12dp" />
+
+            <HorizontalScrollView
+                android:id="@+id/scrollCategories"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fillViewport="true"
+                android:scrollbars="none"
+                android:clipToPadding="false"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp">
+
+                <LinearLayout
+                    android:id="@+id/layoutCategories"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp">
+
+                    <!-- All Products Chip -->
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipAll"
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="48dp"
+                        android:text="@string/category_all"
+                        android:textStyle="bold"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/edusahand_medium"
+                        app:chipCornerRadius="20dp"
+                        app:chipStartPadding="16dp"
+                        app:chipEndPadding="16dp"
+                        app:chipBackgroundColor="@drawable/selector_bottom_nav"
+                        android:textColor="@color/black"
+                        android:checked="true"
+                        android:layout_marginEnd="8dp" />
+
+                    <!-- Dog Products Chip -->
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipDog"
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="48dp"
+                        android:text="@string/category_dog"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/edusahand_medium"
+                        app:chipIcon="@drawable/chip_dog_1"
+                        app:chipIconVisible="true"
+                        app:chipIconSize="20dp"
+                        app:chipCornerRadius="20dp"
+                        app:chipStartPadding="12dp"
+                        app:chipEndPadding="16dp"
+                        app:chipBackgroundColor="@drawable/selector_bottom_nav"
+                        android:layout_marginEnd="8dp" />
+
+                    <!-- Cat Products Chip -->
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipCat"
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="48dp"
+                        android:text="@string/category_cat"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/edusahand_medium"
+                        app:chipIcon="@drawable/ic_chip_cat"
+                        app:chipIconVisible="true"
+                        app:chipIconSize="20dp"
+                        app:chipCornerRadius="20dp"
+                        app:chipStartPadding="12dp"
+                        app:chipEndPadding="16dp"
+                        app:chipBackgroundColor="@drawable/selector_bottom_nav" />
+
+                </LinearLayout>
+            </HorizontalScrollView>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Products Section -->
+    <LinearLayout
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/scrollCategories"
+        android:orientation="vertical"
+        android:background="#F8F9FA"
+        app:layout_constraintTop_toBottomOf="@id/headerSection"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Products Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="12dp"
+            android:background="#F8F9FA">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/products"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="#1A1A1A"
+                android:fontFamily="@font/edusahand_bold" />
+
+        </LinearLayout>
+
+        <!-- Products RecyclerView -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerAllProducts"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clipToPadding="false"
+            android:padding="0dp"
+            android:overScrollMode="never"/>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout> 

@@ -1,6 +1,9 @@
 package com.example.tuibikho;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
@@ -48,5 +51,28 @@ public class MainActivity extends AppCompatActivity {
             }
             return false;
         });
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Uri data = intent.getData();
+        if (data != null && "yourapp".equals(data.getScheme()) && "vnpay_return".equals(data.getHost())) {
+            String rspCode = data.getQueryParameter("vnp_ResponseCode");
+            String message;
+            if ("00".equals(rspCode)) {
+                message = "Thanh toán thành công!";
+            } else {
+                message = "Thanh toán thất bại hoặc bị huỷ!";
+            }
+            showDialog(message);
+        }
+    }
+
+    private void showDialog(String message) {
+        new AlertDialog.Builder(this)
+            .setMessage(message)
+            .setPositiveButton("OK", null)
+            .show();
     }
 }

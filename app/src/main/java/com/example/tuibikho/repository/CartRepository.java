@@ -4,9 +4,12 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class CartRepository {
@@ -112,4 +115,6 @@ public class CartRepository {
             .addOnSuccessListener(aVoid -> { if (onSuccess != null) onSuccess.run(); })
             .addOnFailureListener(e -> { if (onFailure != null) onFailure.run(); });
     }
+
+
 } 

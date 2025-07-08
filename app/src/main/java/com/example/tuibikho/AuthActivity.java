@@ -11,19 +11,29 @@ public class AuthActivity extends AppCompatActivity {
         setContentView(R.layout.activity_auth);
 
         if (savedInstanceState == null) {
-            getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.auth_container, new LoginFragment())
-                .commit();
+            String screen = getIntent().getStringExtra("screen");
+            if ("register".equals(screen)) {
+                showRegisterFragment(false);
+            } else {
+                showLoginFragment(false);
+            }
         }
     }
 
-    public void showRegisterFragment() {
-        getSupportFragmentManager()
+    public void showLoginFragment(boolean addToBackStack) {
+        var transaction = getSupportFragmentManager()
             .beginTransaction()
-            .replace(R.id.auth_container, new RegisterFragment())
-            .addToBackStack(null)
-            .commit();
+            .replace(R.id.auth_container, new LoginFragment());
+        if (addToBackStack) transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    public void showRegisterFragment(boolean addToBackStack) {
+        var transaction = getSupportFragmentManager()
+            .beginTransaction()
+            .replace(R.id.auth_container, new RegisterFragment());
+        if (addToBackStack) transaction.addToBackStack(null);
+        transaction.commit();
     }
 
     public void navigateToHome() {

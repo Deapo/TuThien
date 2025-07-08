@@ -9,6 +9,8 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -22,24 +24,16 @@ public class SplashActivity extends AppCompatActivity {
         Button btnRegister = findViewById(R.id.btnLinkRegister);
 
         btnLogin.setOnClickListener(v -> {
-            startActivity(new Intent(SplashActivity.this, AuthActivity.class));
+            Intent intent = new Intent(SplashActivity.this, AuthActivity.class);
+            intent.putExtra("screen", "login");
+            startActivity(intent);
         });
 
         btnRegister.setOnClickListener(v -> {
-            startActivity(new Intent(SplashActivity.this, AuthActivity.class));
+            Intent intent = new Intent(SplashActivity.this, AuthActivity.class);
+            intent.putExtra("screen", "register");
+            startActivity(intent);
         });
 
     }
-
-//    private void checkUserStatus() {
-//        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-//        if (currentUser != null) {
-//            // User is signed in, go to HomeActivity
-//            startActivity(new Intent(SplashActivity.this, HomeActivity.class));
-//        } else {
-//            // No user is signed in, go to AuthActivity
-//            startActivity(new Intent(SplashActivity.this, AuthActivity.class));
-//        }
-//        finish();
-//    }
 }
