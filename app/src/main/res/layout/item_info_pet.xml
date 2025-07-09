@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="140dp"
+    android:layout_height="200dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="24dp"
     android:layout_marginStart="4dp"
@@ -30,6 +30,18 @@
             android:orientation="vertical"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="20dp">
+
+            <!-- Nút xóa pet ở góc trên bên phải -->
+            <ImageButton
+                android:id="@+id/btnDeletePet"
+                android:layout_width="48dp"
+                android:layout_height="49dp"
+                android:layout_gravity="end"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_remove"
+                android:contentDescription="Xóa thú cưng"
+                android:padding="4dp"
+                android:layout_marginBottom="4dp"/>
 
             <TextView
                 android:id="@+id/petName"
@@ -61,8 +73,18 @@
                 android:fontFamily="@font/edusahand_bold"
                 android:textStyle="bold"
                 android:textSize="14sp"
+                android:layout_gravity="start"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:id="@+id/petHealthStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tình trạng: Dị ứng"
+                android:textSize="14sp"
+                android:fontFamily="@font/edusahand_bold"
+                android:textStyle="italic"
                 android:layout_gravity="start"/>
         </LinearLayout>
     </LinearLayout>
-
 </androidx.cardview.widget.CardView>

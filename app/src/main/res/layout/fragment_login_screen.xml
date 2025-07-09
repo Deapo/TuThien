@@ -211,7 +211,7 @@
                         android:clickable="true"
                         android:focusable="true"
                         android:text="@string/register_now"
-                        android:textColor="@color/green"
+                        android:textColor="@color/black"
                         android:textStyle="bold"
                         android:textSize="14sp"
                         android:fontFamily="@font/edusahand_bold"

@@ -4,6 +4,8 @@ package com.example.tuibikho.data;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +17,9 @@ public class PetEntity {
     private String petImage;
     private String petAge;
     private String petGender;
+    private String birthday;
+    private String healthStatus;
+    private String vaccinationSchedule; // JSON string hoặc custom object
 
     public int getPetId() {
         return petId;
@@ -48,5 +53,40 @@ public class PetEntity {
     }
     public void setPetGender(String petGender) {
         this.petGender = petGender;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getHealthStatus() {
+        return healthStatus;
+    }
+
+    public void setHealthStatus(String healthStatus) {
+        this.healthStatus = healthStatus;
+    }
+
+    public String getVaccinationSchedule() {
+        return vaccinationSchedule;
+    }
+
+    public void setVaccinationSchedule(String vaccinationSchedule) {
+        this.vaccinationSchedule = vaccinationSchedule;
+    }
+
+    public int calculateAge() {
+        if (birthday == null || birthday.isEmpty()) return 0;
+        try {
+            LocalDate birthDate = LocalDate.parse(birthday);
+            LocalDate now = LocalDate.now();
+            return Period.between(birthDate, now).getYears();
+        } catch (Exception e) {
+            return 0;
+        }
     }
 }

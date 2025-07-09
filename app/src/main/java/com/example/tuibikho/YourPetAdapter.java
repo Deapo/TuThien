@@ -14,12 +14,21 @@ import com.google.android.material.imageview.ShapeableImageView;
 
 public class YourPetAdapter extends ListAdapter<PetEntity, YourPetAdapter.PetViewHolder> {
     private OnPetClickListener listener;
+    private OnPetDeleteListener deleteListener;
 
     public interface OnPetClickListener {
         void onPetClick(PetEntity pet);
     }
 
     public void setOnPetClickListener(OnPetClickListener listener) {this.listener = listener;}
+
+    public interface OnPetDeleteListener {
+        void onDeletePet(PetEntity pet);
+    }
+
+    public void setOnPetDeleteListener(OnPetDeleteListener listener) {
+        this.deleteListener = listener;
+    }
 
     public static final DiffUtil.ItemCallback<PetEntity> DIFF_CALLBACK = new DiffUtil.ItemCallback<PetEntity>() {
         @Override
@@ -54,11 +63,18 @@ public class YourPetAdapter extends ListAdapter<PetEntity, YourPetAdapter.PetVie
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) listener.onPetClick(pet);
         });
+        holder.btnDeletePet.setOnClickListener(v -> {
+            if (deleteListener != null) {
+                deleteListener.onDeletePet(pet);
+            }
+        });
     }
 
     static class PetViewHolder extends RecyclerView.ViewHolder {
         private final ShapeableImageView petImage;
         private final TextView petName, petAge, petGender;
+        private final TextView petHealthStatus;
+        private final View btnDeletePet; // Added for the delete button
 
         public PetViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -66,12 +82,17 @@ public class YourPetAdapter extends ListAdapter<PetEntity, YourPetAdapter.PetVie
             petName = itemView.findViewById(R.id.petName);
             petAge = itemView.findViewById(R.id.petAge);
             petGender = itemView.findViewById(R.id.petGender);
+            petHealthStatus = itemView.findViewById(R.id.petHealthStatus);
+            btnDeletePet = itemView.findViewById(R.id.btnDeletePet); // Initialize the delete button
         }
 
         public void bind(PetEntity pet) {
             petName.setText(pet.getPetName());
-            petAge.setText("Tuổi: " + pet.getPetAge());
+            // Hiển thị tuổi động
+            int age = pet.calculateAge();
+            petAge.setText("Tuổi: " + age);
             petGender.setText("Giới tính: " + pet.getPetGender());
+            petHealthStatus.setText("Tình trạng: " + (pet.getHealthStatus() != null ? pet.getHealthStatus() : ""));
             if (pet.getPetImage() != null && !pet.getPetImage().isEmpty()) {
                 Glide.with(itemView.getContext())
                         .load(pet.getPetImage())

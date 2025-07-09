@@ -15,8 +15,8 @@ public class PetViewModel extends AndroidViewModel {
         petRepository = new PetRepository();
     }
 
-    public void addOrUpdatePet(String userId, String petKey, String name, int age, String gender, String imgAvatar, Runnable onSuccess, Runnable onFailure) {
-        petRepository.addOrUpdatePet(userId, petKey, name, age, gender, imgAvatar, onSuccess, onFailure);
+    public void addOrUpdatePet(String userId, String petKey, String name, int age, String gender, String imgAvatar, String birthday, String healthStatus, String vaccinationSchedule, Runnable onSuccess, Runnable onFailure) {
+        petRepository.addOrUpdatePet(userId, petKey, name, age, gender, imgAvatar, birthday, healthStatus, vaccinationSchedule, onSuccess, onFailure);
     }
 
     public void removePet(String userId, String petKey, Runnable onSuccess, Runnable onFailure) {

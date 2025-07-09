@@ -16,18 +16,22 @@ import com.example.tuibikho.data.ProductEntity;
 import com.example.tuibikho.viewmodel.HomeViewModel;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import com.example.tuibikho.databinding.FragmentHomeScreenBinding;
 import com.google.firebase.auth.FirebaseAuth;
+import com.example.tuibikho.repository.PetRepository;
 
 public class HomeFragment extends Fragment {
     private FragmentHomeScreenBinding binding;
     private ProductAdapter productAdapter;
     private PetTypeAdapter petTypeAdapter;
     private HomeViewModel viewModel;
+    // Thêm biến lưu danh sách thông báo
+    private List<String> notificationMessages = new ArrayList<>();
 
     @Nullable
     @Override
@@ -47,6 +51,7 @@ public class HomeFragment extends Fragment {
         setupRecyclerViews();
         setupPetTypeClick();
         setupSearchBar();
+        checkPetNotifications();
 
         binding.btnSeeAll.setOnClickListener(v -> navigateToAllProducts(null, null));
         binding.btnSeeAllExplore.setOnClickListener(v -> navigateToAllProducts(null, null));
@@ -71,7 +76,6 @@ public class HomeFragment extends Fragment {
         input.setHint("Nhập tên sản phẩm...");
         builder.setView(input);
 
-        // Set up the buttons
         builder.setPositiveButton("Tìm kiếm", (dialog, which) -> {
             String query = input.getText().toString().trim();
             if (!query.isEmpty()) {
@@ -160,6 +164,89 @@ public class HomeFragment extends Fragment {
                 binding.emptyTrending.setVisibility(View.VISIBLE);
             }
         });
+    }
+
+    private void checkPetNotifications() {
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        PetRepository petRepository = new PetRepository();
+        petRepository.getAllPets(userId).observe(getViewLifecycleOwner(), petsMap -> {
+            boolean hasBirthday = false;
+            boolean hasVaccination = false;
+            notificationMessages.clear();
+            LocalDate today = LocalDate.now();
+            if (petsMap != null) {
+                for (Map.Entry<String, Map<String, Object>> entry : petsMap.entrySet()) {
+                    Map<String, Object> pet = entry.getValue();
+                    String name = (String) pet.get("name");
+                    //kiểm tra sinh nhật
+                    String birthday = (String) pet.get("birthday");
+                    if (birthday != null && !birthday.isEmpty()) {
+                        try {
+                            LocalDate birthDate = LocalDate.parse(birthday, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                            if (birthDate.getMonth() == today.getMonth() && birthDate.getDayOfMonth() == today.getDayOfMonth()) {
+                                hasBirthday = true;
+                                notificationMessages.add("Hôm nay là sinh nhật của " + name + "! 🎂");
+                            }
+                        } catch (Exception ignored) {}
+                    }
+                    //kiểm tra vaccine
+                    Object vaccinationObj = pet.get("vaccinationSchedule");
+                    String vaccinationSchedule = "";
+                    if (vaccinationObj instanceof String) {
+                        vaccinationSchedule = (String) vaccinationObj;
+                    } else if (vaccinationObj instanceof Map) {
+                        Map<String, Object> vMap = (Map<String, Object>) vaccinationObj;
+                        StringBuilder sb = new StringBuilder();
+                        for (Map.Entry<String, Object> entry2 : vMap.entrySet()) {
+                            sb.append(entry2.getKey()).append(": ").append(entry2.getValue()).append("; ");
+                        }
+                        vaccinationSchedule = sb.toString();
+                    }
+                    if (vaccinationSchedule != null && !vaccinationSchedule.isEmpty()) {
+                        String[] schedules = vaccinationSchedule.split(";");
+                        for (String schedule : schedules) {
+                            String[] parts = schedule.split(":");
+                            if (parts.length == 2) {
+                                String dateStr = parts[1].replaceAll("[^0-9/]", "").trim();
+                                try {
+                                    LocalDate vDate = LocalDate.parse(dateStr, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                                    if (vDate.equals(today) || vDate.plusMonths(3).equals(today)) {
+                                        hasVaccination = true;
+                                        notificationMessages.add("Đến lịch tiêm phòng cho " + name + " vào ngày " + dateStr);
+                                    }
+                                } catch (Exception ignored) {}
+                            }
+                        }
+                    }
+                }
+            }
+            View notiBtn = getView().findViewById(R.id.btnNotification);
+            if (notiBtn != null) {
+                notiBtn.setVisibility(View.VISIBLE);
+                notiBtn.setActivated(hasBirthday || hasVaccination);
+                notiBtn.setOnClickListener(v -> showNotificationPopup());
+            }
+        });
+    }
+
+    private void showNotificationPopup() {
+        if (notificationMessages.isEmpty()) {
+            new android.app.AlertDialog.Builder(requireContext())
+                .setTitle("Thông báo")
+                .setMessage("Không có thông báo nào hôm nay.")
+                .setPositiveButton("OK", null)
+                .show();
+        } else {
+            StringBuilder message = new StringBuilder();
+            for (String msg : notificationMessages) {
+                message.append("• ").append(msg).append("\n");
+            }
+            new android.app.AlertDialog.Builder(requireContext())
+                .setTitle("Thông báo hôm nay")
+                .setMessage(message.toString())
+                .setPositiveButton("OK", null)
+                .show();
+        }
     }
 
     @Override

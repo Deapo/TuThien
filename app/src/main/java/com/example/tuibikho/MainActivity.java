@@ -20,8 +20,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         if (BuildConfig.DEBUG) {
-            // Lấy một instance của database và gọi getOpenHelper() để buộc nó mở kết nối.
-            // Điều này sẽ giữ cho database "mở" để App Inspector có thể truy cập.
             Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "app_database")
                     .fallbackToDestructiveMigration()
                     .build()
@@ -53,26 +51,4 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        Uri data = intent.getData();
-        if (data != null && "yourapp".equals(data.getScheme()) && "vnpay_return".equals(data.getHost())) {
-            String rspCode = data.getQueryParameter("vnp_ResponseCode");
-            String message;
-            if ("00".equals(rspCode)) {
-                message = "Thanh toán thành công!";
-            } else {
-                message = "Thanh toán thất bại hoặc bị huỷ!";
-            }
-            showDialog(message);
-        }
-    }
-
-    private void showDialog(String message) {
-        new AlertDialog.Builder(this)
-            .setMessage(message)
-            .setPositiveButton("OK", null)
-            .show();
-    }
 }

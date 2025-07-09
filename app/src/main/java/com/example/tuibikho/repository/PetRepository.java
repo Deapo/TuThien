@@ -14,7 +14,7 @@ public class PetRepository {
     public PetRepository() {
     }
 
-    public void addOrUpdatePet(String userId, String petKey, String name, int age, String gender, String imgAvatar, Runnable onSuccess, Runnable onFailure) {
+    public void addOrUpdatePet(String userId, String petKey, String name, int age, String gender, String imgAvatar, String birthday, String healthStatus, String vaccinationSchedule, Runnable onSuccess, Runnable onFailure) {
         DocumentReference petRef = db.collection("your_pet").document(userId);
         petRef.get().addOnSuccessListener(documentSnapshot -> {
             Map<String, Object> pets = (Map<String, Object>) documentSnapshot.getData();
@@ -24,6 +24,9 @@ public class PetRepository {
             pet.put("age", age);
             pet.put("gender", gender);
             pet.put("imgAvatar", imgAvatar);
+            pet.put("birthday", birthday);
+            pet.put("healthStatus", healthStatus);
+            pet.put("vaccinationSchedule", vaccinationSchedule); // dạng JSON string hoặc Map
             pets.put(petKey, pet);
             petRef.set(pets)
                 .addOnSuccessListener(aVoid -> { if (onSuccess != null) onSuccess.run(); })

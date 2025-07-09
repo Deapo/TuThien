@@ -84,6 +84,7 @@ public class ProfileFragment extends Fragment {
                         petEntity.setPetAge(String.valueOf(pet.get("age")));
                         petEntity.setPetGender((String) pet.get("gender"));
                         petEntity.setPetImage((String) pet.get("imgAvatar"));
+                        petEntity.setHealthStatus((String) pet.get("healthStatus"));
                         pets.add(petEntity);
                     }
                 }
@@ -116,6 +117,24 @@ public class ProfileFragment extends Fragment {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         });
+
+        petAdapter.setOnPetDeleteListener(pet -> {
+            // Hiện dialog xác nhận nếu muốn
+            new android.app.AlertDialog.Builder(getContext())
+                .setTitle("Xóa thú cưng")
+                .setMessage("Bạn có chắc muốn xóa thú cưng này?")
+                .setPositiveButton("Xóa", (dialog, which) -> {
+                    // Gọi ViewModel để xóa
+                    petViewModel.removePet(
+                        userId,
+                        String.valueOf(pet.getPetId()), // hoặc petKey nếu bạn lưu key riêng
+                        () -> Toast.makeText(getContext(), "Đã xóa thú cưng", Toast.LENGTH_SHORT).show(),
+                        () -> Toast.makeText(getContext(), "Lỗi khi xóa", Toast.LENGTH_SHORT).show()
+                    );
+                })
+                .setNegativeButton("Hủy", null)
+                .show();
+        });
     }
 
     private void showAddPetDialog() {
@@ -128,6 +147,9 @@ public class ProfileFragment extends Fragment {
         android.widget.EditText edtPetAge = dialogView.findViewById(R.id.edtPetAge);
         android.widget.RadioGroup radioGroupGender = dialogView.findViewById(R.id.radioGroupGender);
         android.widget.EditText edtPetAvatar = dialogView.findViewById(R.id.edtPetAvatar);
+        android.widget.EditText edtPetBirthday = dialogView.findViewById(R.id.edtPetBirthday);
+        android.widget.EditText edtPetHealthStatus = dialogView.findViewById(R.id.edtPetHealthStatus);
+        android.widget.EditText edtPetVaccination = dialogView.findViewById(R.id.edtPetVaccination);
         android.widget.Button btnAddPet = dialogView.findViewById(R.id.btnAddPet);
         android.widget.Button btnCancel = dialogView.findViewById(R.id.btnCancel);
 
@@ -136,6 +158,9 @@ public class ProfileFragment extends Fragment {
             String name = edtPetName.getText().toString().trim();
             String ageStr = edtPetAge.getText().toString().trim();
             String imgAvatar = edtPetAvatar.getText().toString().trim();
+            String birthday = edtPetBirthday.getText().toString().trim();
+            String healthStatus = edtPetHealthStatus.getText().toString().trim();
+            String vaccinationSchedule = edtPetVaccination.getText().toString().trim();
             int selectedGenderId = radioGroupGender.getCheckedRadioButtonId();
             String gender = "";
             if (selectedGenderId == R.id.radioMale) gender = "Đực";
@@ -146,10 +171,22 @@ public class ProfileFragment extends Fragment {
             }
             int age = Integer.parseInt(ageStr);
             String petKey = java.util.UUID.randomUUID().toString();
-            petViewModel.addOrUpdatePet(userId, petKey, name, age, gender, imgAvatar, () -> {
-                Toast.makeText(getContext(), "Thêm thú cưng thành công", Toast.LENGTH_SHORT).show();
-                dialog.dismiss();
-            }, () -> Toast.makeText(getContext(), "Lỗi khi thêm thú cưng", Toast.LENGTH_SHORT).show());
+            petViewModel.addOrUpdatePet(
+                userId,
+                petKey,
+                name,
+                age,
+                gender,
+                imgAvatar,
+                birthday,
+                healthStatus,
+                vaccinationSchedule,
+                () -> {
+                    Toast.makeText(getContext(), "Thêm thú cưng thành công", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                },
+                () -> Toast.makeText(getContext(), "Lỗi khi thêm thú cưng", Toast.LENGTH_SHORT).show()
+            );
         });
         dialog.show();
     }
